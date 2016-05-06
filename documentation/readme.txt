@@ -1,0 +1,1 @@
+this folder contains the documentation of the simulator java code, any used database structure definitions and a usage-manual.
