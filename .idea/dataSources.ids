@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - seebn@localhost" uuid="3037e0c6-dd4d-45a2-a590-5dc6765b9c65">
+    <database-info product="MySQL" version="5.7.12-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="seebn"/>
+      <table id="2" parent="1" name="network_load"/>
+      <column id="3" parent="2" name="ID">
+        <mandatory>1</mandatory>
+        <data-type>int(10) unsigned</data-type>
+      </column>
+      <column id="4" parent="2" name="SourceBoundaryPortID">
+        <mandatory>1</mandatory>
+        <data-type>int(10) unsigned</data-type>
+      </column>
+      <column id="5" parent="2" name="DestinationBoundaryPortID">
+        <mandatory>1</mandatory>
+        <data-type>int(10) unsigned</data-type>
+      </column>
+      <column id="6" parent="2" name="TrafficAmount">
+        <mandatory>1</mandatory>
+        <data-type>float unsigned</data-type>
+      </column>
+      <column id="7" parent="2" name="LoadTime">
+        <mandatory>1</mandatory>
+        <data-type>timestamp</data-type>
+        <default-expression>&apos;CURRENT_TIMESTAMP&apos;</default-expression>
+      </column>
+      <column id="8" parent="2" name="network_loadcol">
+        <mandatory>1</mandatory>
+        <data-type>varchar(45)</data-type>
+      </column>
+      <index id="9" parent="2" name="DestinationIDIndex">
+        <columns>DestinationBoundaryPortID</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="10" parent="2" name="ID_UNIQUE">
+        <columns>ID</columns>
+        <desc-columns></desc-columns>
+        <unique>1</unique>
+      </index>
+      <index id="11" parent="2" name="LoadTime">
+        <columns>LoadTime</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <index id="12" parent="2" name="SourceIDIndex">
+        <columns>SourceBoundaryPortID</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="13" parent="2" name="ID_UNIQUE">
+        <columns>ID</columns>
+        <underlying-index>ID_UNIQUE</underlying-index>
+      </key>
+      <key id="14" parent="2" name="PRIMARY">
+        <columns>ID</columns>
+        <primary>1</primary>
+      </key>
+    </database-model>
+  </data-source>
+</component>

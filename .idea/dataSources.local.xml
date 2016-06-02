@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - seebn@localhost" uuid="3037e0c6-dd4d-45a2-a590-5dc6765b9c65">
+      <secret-storage>memory</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>seebn.*</schema-pattern>
+      <default-schemas>seebn.*</default-schemas>
+    </data-source>
+  </component>
+</project>
