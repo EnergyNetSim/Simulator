@@ -9,6 +9,8 @@ public class Main {
         try {
             hftl.simulator.views.MainWindow windowMain = new hftl.simulator.views.MainWindow();
 
+            hftl.simulator.models.DatabaseBasics connect = new  hftl.simulator.models.DatabaseBasics();
+
             System.out.println("Drücken Sie Enter um das Spiel nun zu beenden.");
             System.in.read();
         }
