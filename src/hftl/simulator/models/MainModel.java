@@ -1,33 +1,49 @@
-package hftl.simulator.views.helper;
+package hftl.simulator.models;
 
 import hftl.simulator.models.helper.DataPoint;
 import hftl.simulator.models.helper.DataSeries;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
-
-import javax.swing.*;
 
 /**
- * Created by Christian on 31.05.2016.
+ * Created by nickcariss on 07.06.16.
  */
-public class TestChart extends ApplicationFrame
-{
-    public TestChart(){
+public class MainModel {
 
-        super("Test!!!");
-        ChartingHistogram chart = new ChartingHistogram("Stromverbrauch", data(), "Stunde", "mW");
-        try
-        {
-            JPanel panel = chart.DoChart();
-            setContentPane(panel);
-            this.pack();
-            RefineryUtilities.centerFrameOnScreen(this);
-            this.setVisible(true);
-        }
-        catch (Exception e){}
+    NetworkLayout[] selectedNetworks;
+    DataSeries[] dsCost;
+    DataSeries[] dsPowerConsumption;
+    DataSeries[] dsNetworkLoad;
+    Network[] networks;
+    Setting[] settings;
+
+
+    public MainModel () {
+
     }
 
-    private DataSeries[] data() {
+    public void calculate ()
+    {
+        dsCost = simulate();
+        dsPowerConsumption = simulate();
+        dsNetworkLoad = simulate();
+    }
+
+    public DataSeries[] getDsCost()
+    {
+        return dsCost;
+    }
+
+    public DataSeries[] getDsPowerConsumption()
+    {
+        return dsPowerConsumption;
+    }
+
+    public DataSeries[] getDsNetworkLoad()
+    {
+        return dsNetworkLoad;
+    }
+
+    private DataSeries[] simulate () {
+
         DataSeries[] dataseries;
 
         dataseries = new DataSeries[2];
@@ -91,5 +107,34 @@ public class TestChart extends ApplicationFrame
 
         return dataseries;
 
+    }
+
+    public Network[] getNetworks() {
+
+        //TODO Datenbankabfrage
+        //abgleich mit networks (hier ist auch hinterlegt, was schon selected ist)
+        //--> aus der DB aktualisierte Liste und Beibehaltung der Auswahl des Users
+        //Rückgabe als Array von Networks
+
+
+
+        return null;
+
+    }
+
+    public void setSelectedNetworks(Network[] networks){
+
+        //TODO!
+        //selectedNetworks =  NetworkLayouts.getById(intNetworkIds);
+
+    }
+
+    public boolean hasSelectedNetworks() {
+        //TODO: Check if any selected networks in networks array
+        return true;
+    }
+
+    public void setSettings(Setting[] settings) {
+        //TODO: Save settings to DB
     }
 }

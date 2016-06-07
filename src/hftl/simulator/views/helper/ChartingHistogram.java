@@ -85,7 +85,7 @@ public class ChartingHistogram implements Charting
                 {
                     point = inputData[i].getValue(j);
                     dataseries.add(point.X(), point.Y());
-                    System.out.println(j + ". Datensatz eingefügt.");
+                    System.out.println(j + ". Datensatz eingefügt: "+ point.X()+","+point.Y());
                 }
 
                 dataset.addSeries(dataseries);
