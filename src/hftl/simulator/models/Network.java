@@ -5,33 +5,34 @@ package hftl.simulator.models;
  */
 public class Network {
 
-    private int id;
     private String name;
+    private int id;
     private boolean selected;
 
-    public String Name () { //Darf er das?
-     return name;
-
-    }
-    public void Name (String name) { //Wär cool, Man!
+    public Network(String name, int id, boolean selected){
         this.name = name;
-    }
-
-    public int Id () { //Darf er das?
-        return id;
-
-    }
-    public void Id (int id) { //Wär cool, Man!
         this.id = id;
-    }
-
-    public boolean Selected () { //Darf er das?
-        return selected;
-
-    }
-    public void Selected (boolean selected) { //Wär cool, Man!
         this.selected = selected;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public void setSelected(boolean selected)
+    {
+        this.selected = selected;
+    }
+
+    public boolean getSelected()
+    {
+        return selected;
+    }
+
 
 
 }

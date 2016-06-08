@@ -1,6 +1,7 @@
 package hftl.simulator.views;
 
 import hftl.simulator.models.Network;
+import hftl.simulator.models.NetworkListModel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,29 +15,31 @@ public class NetworkSelectionView extends JDialog
 {
     JPanel panButtons;
     JScrollPane scrPane;
-    JList listNetworks;
+    JList list;
     JButton btnOk;
     JButton btnCancel;
+    NetworkListModel networks;
 
-    public NetworkSelectionView(JFrame owner)
+    public NetworkSelectionView(JFrame owner, NetworkListModel networks)
     {
         super(owner, "Netzwerke wählen", true);
+        this.networks = networks;
         initialize();
     }
 
     private void initialize()
     {
-        String[] eintraege = {"1","2","3"}; //TODO: Was braucht die Liste? ListModel?
+        //String[] eintraege = {"1","2","3"}; //TODO: Was braucht die Liste? ListModel?
 
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(200,400);
 
         //Create list panel:
-        listNetworks = new JList(eintraege);
+        list = new JList(networks);
         scrPane = new JScrollPane();
         scrPane.setBorder(new EmptyBorder(10,10,10,10));
-        scrPane.add(listNetworks);
+        scrPane.add(list);
         this.add(scrPane, BorderLayout.CENTER);
 
         //Create button panel

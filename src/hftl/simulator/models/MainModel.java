@@ -3,6 +3,8 @@ package hftl.simulator.models;
 import hftl.simulator.models.helper.DataPoint;
 import hftl.simulator.models.helper.DataSeries;
 
+import javax.swing.*;
+
 /**
  * Created by nickcariss on 07.06.16.
  */
@@ -14,9 +16,13 @@ public class MainModel {
     DataSeries[] dsNetworkLoad;
     Network[] networks;
     Setting[] settings;
+    NetworkListModel networks;
 
 
     public MainModel () {
+
+
+        networks = new NetworkListModel();
 
     }
 
@@ -109,16 +115,11 @@ public class MainModel {
 
     }
 
-    public Network[] getNetworks() {
-
-        //TODO Datenbankabfrage
-        //abgleich mit networks (hier ist auch hinterlegt, was schon selected ist)
-        //--> aus der DB aktualisierte Liste und Beibehaltung der Auswahl des Users
-        //Rückgabe als Array von Networks
+    public NetworkListModel getNetworks() {
 
 
 
-        return null;
+        return networks;
 
     }
 
