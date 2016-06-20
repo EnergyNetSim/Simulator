@@ -33,6 +33,11 @@ public class Network {
         return selected;
     }
 
+    public String toString()
+    {
+        return name;
+    }
+
 
 
 }

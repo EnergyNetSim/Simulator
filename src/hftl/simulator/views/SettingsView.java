@@ -1,9 +1,12 @@
 package hftl.simulator.views;
 
 import hftl.simulator.models.Setting;
+import hftl.simulator.models.Settings;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -14,26 +17,52 @@ public class SettingsView extends JDialog
 {
     JPanel panButtons;
     JScrollPane scrPane;
+    JList list;
     JButton btnOk;
-    JButton btnCancel;
+    JLabel lblKey;
+    JTextField txtValue;
+    Setting activeSetting;
 
-    public SettingsView(JFrame owner)
+    public SettingsView(JFrame owner, Settings settings)
     {
         super(owner, "Einstellungen", true);
-        initialize();
+        initialize(settings);
     }
 
-    private void initialize()
+    private void initialize(Settings settings)
     {
-        String[] eintraege = {"1","2","3"}; //TODO: Was braucht die Liste? ListModel?
 
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setSize(200,400);
+        this.setSize(400,400);
 
-        //Create list :
+        //Create list panel:
+        list = new JList(settings);
+        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        scrPane = new JScrollPane();
+        list.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent le) {
+                int idx = list.getSelectedIndex();
+                if (idx != -1) {
+                    btnOk.setEnabled(true);
+                    activeSetting = (Setting) list.getModel().getElementAt(idx);
+                    System.out.println("Current selection: " + list.getModel().getElementAt(idx));
+                    lblKey.setText(activeSetting.getKey());
+                    txtValue.setText(activeSetting.getValue());
+                }
+                else
+                {
+                    refresh();
+                }
+            }
+        });
+
+
+
+
+
+
+        scrPane = new JScrollPane(list);
         scrPane.setBorder(new EmptyBorder(10,10,10,10));
         this.add(scrPane, BorderLayout.CENTER);
 
@@ -44,12 +73,15 @@ public class SettingsView extends JDialog
         this.add(panButtons, BorderLayout.SOUTH);
 
         //Create buttons:
-        btnOk = createButton("OK");
+        lblKey = new JLabel("Test");
+        panButtons.add(lblKey);
+        txtValue = new JTextField();
+        txtValue.setPreferredSize(new Dimension(150,20));
+        //txtValue.setSize(200,20);
+        panButtons.add(txtValue);
+        btnOk = createButton("Save");
+        btnOk.setEnabled(false);
         panButtons.add(btnOk);
-        btnCancel = createButton("Abbrechen");
-        panButtons.add(btnCancel);
-
-        this.setVisible(true);
 
     }
 
@@ -64,28 +96,26 @@ public class SettingsView extends JDialog
     public void setListener(ActionListener l)
     {
         btnOk.setActionCommand("btnOk");
-        btnCancel.setActionCommand("btnCancel");
-
         btnOk.addActionListener(l);
-        btnCancel.addActionListener(l);
     }
 
-    public Setting[] getSettings() {
-
-        //TODO: Return selected network ids as array (obviously)
-        return null;
-
+    public int getActiveIndex()
+    {
+        return list.getSelectedIndex();
     }
 
-    public void setSettings(Setting[] settings) {
+    public String getCurrentValue()
+    {
+        return txtValue.getText();
+    }
 
-        //TODO: Liste des Views mit den Netzwerken füllen, so dass Namen angezeigt und die Indizes hinterlegt sind.
-        //wenn Network.selected, dann muss das Netzwerk in der Liste als ausgewählt angezeigt werden.
-
-
-
-
-
+    public void refresh()
+    {
+        txtValue.setText("");
+        lblKey.setText("Einstellung");
+        list.clearSelection();
+        btnOk.setEnabled(false);
+        this.repaint();
 
     }
 }

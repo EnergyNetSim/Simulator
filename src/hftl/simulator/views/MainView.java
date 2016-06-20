@@ -61,7 +61,7 @@ public class MainView extends JFrame {
         panHeader.add(btnSettings);
 
         btnCalculate = createButton("Berechnen");
-        btnCalculate.setEnabled(false);
+        btnCalculate.setEnabled(true);
         panHeader.add(btnCalculate);
 
         this.setVisible(true);

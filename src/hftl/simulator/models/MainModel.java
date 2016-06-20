@@ -14,15 +14,16 @@ public class MainModel {
     DataSeries[] dsCost;
     DataSeries[] dsPowerConsumption;
     DataSeries[] dsNetworkLoad;
-    Network[] networks;
-    Setting[] settings;
+    Settings settings;
     NetworkListModel networks;
 
 
     public MainModel () {
 
-
         networks = new NetworkListModel();
+        networks.load();
+        settings = new Settings();
+        settings.load();
 
     }
 
@@ -117,25 +118,29 @@ public class MainModel {
 
     public NetworkListModel getNetworks() {
 
-
-
         return networks;
 
     }
 
-    public void setSelectedNetworks(Network[] networks){
+    public Settings getSettings() {
 
-        //TODO!
-        //selectedNetworks =  NetworkLayouts.getById(intNetworkIds);
+        return settings;
+
+    }
+
+    public void setSelectedNetworks(int[] indices){
+
+        networks.setSelectedIndices(indices);
 
     }
 
     public boolean hasSelectedNetworks() {
-        //TODO: Check if any selected networks in networks array
-        return true;
+
+        return networks.hasSelectedNetworks();
+
     }
 
-    public void setSettings(Setting[] settings) {
-        //TODO: Save settings to DB
+    public void saveSetting(int index, String value) {
+        ((Setting) settings.getElementAt(index)).setValue(value);
     }
 }

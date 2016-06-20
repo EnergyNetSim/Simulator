@@ -18,28 +18,28 @@ public class NetworkSelectionView extends JDialog
     JList list;
     JButton btnOk;
     JButton btnCancel;
-    NetworkListModel networks;
 
     public NetworkSelectionView(JFrame owner, NetworkListModel networks)
     {
         super(owner, "Netzwerke wählen", true);
-        this.networks = networks;
-        initialize();
+        initialize(networks);
     }
 
-    private void initialize()
+    private void initialize(NetworkListModel networks)
     {
-        //String[] eintraege = {"1","2","3"}; //TODO: Was braucht die Liste? ListModel?
-
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setSize(200,400);
+        this.setSize(300,400);
 
         //Create list panel:
         list = new JList(networks);
-        scrPane = new JScrollPane();
+        list.setSelectedIndices(networks.getSelectedIndices());
+        scrPane = new JScrollPane(list);
         scrPane.setBorder(new EmptyBorder(10,10,10,10));
-        scrPane.add(list);
+        //scrPane.add(list);
+        //JLabel testlabel = new JLabel("Testlabel");
+        //testlabel.setSize(20,20);
+        //scrPane.add(testlabel);
         this.add(scrPane, BorderLayout.CENTER);
 
         //Create button panel
@@ -53,8 +53,6 @@ public class NetworkSelectionView extends JDialog
         panButtons.add(btnOk);
         btnCancel = createButton("Abbrechen");
         panButtons.add(btnCancel);
-
-        this.setVisible(true);
 
     }
 
@@ -75,15 +73,23 @@ public class NetworkSelectionView extends JDialog
         btnCancel.addActionListener(l);
     }
 
-    public Network[] getSelectedNetworks() {
+    public int[] getSelectedIndices() {
 
         //TODO: Return selected network ids as array (obviously)
-        return null;
+
+        return list.getSelectedIndices();
     }
 
-    public void setNetworks(Network[] networks) {
+    public void setNetworks(NetworkListModel networks) {
 
         //TODO: Liste des Views mit den Netzwerken füllen, so dass Namen angezeigt und die Indizes hinterlegt sind.
+        System.out.println("In NetworkSelectionView.setNetworks():");
+        System.out.println(networks);
+        list.setModel(networks);
+        System.out.println(list.getModel());
+
+        list.setSelectedIndices(networks.getSelectedIndices());
+        this.repaint();
         //wenn Network.selected, dann muss das Netzwerk in der Liste als ausgewählt angezeigt werden.
 
 

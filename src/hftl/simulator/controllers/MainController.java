@@ -7,6 +7,7 @@ import hftl.simulator.views.MainView;
 import hftl.simulator.views.NetworkSelectionView;
 import hftl.simulator.views.SettingsView;
 
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -42,13 +43,13 @@ public class MainController implements ActionListener{
 
         if (strActionCommand.equals("btnNetworkSelection"))
         {
-            NetworkSelectionView networkSelectionView = new NetworkSelectionView(mainView);
+            NetworkSelectionView networkSelectionView = new NetworkSelectionView(mainView, model.getNetworks());
             networkSelectionView.setListener(new NetworkSelectionController(networkSelectionView));
             networkSelectionView.setVisible( true );
         }
         else if (strActionCommand.equals("btnSettings"))
         {
-            SettingsView settingsView = new SettingsView(mainView);
+            SettingsView settingsView = new SettingsView(mainView, model.getSettings());
             settingsView.setListener(new SettingsController(settingsView));
             settingsView.setVisible( true );
         }
@@ -71,7 +72,8 @@ public class MainController implements ActionListener{
 
         public NetworkSelectionController(NetworkSelectionView view) {
             this.view = view;
-            view.setNetworks(model.getNetworks());
+            //view.setNetworks(model.getNetworks()); //is done in view constructor
+            System.out.println("In NetworkSelectionController Constructor");
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -80,13 +82,8 @@ public class MainController implements ActionListener{
 
             if (strActionCommand.equals("btnOk"))
             {
-                model.setSelectedNetworks(view.getSelectedNetworks());
-
-                if (model.hasSelectedNetworks()) {
-                    mainView.enableCalculating(true);
-                } else {
-                    mainView.enableCalculating(false);
-                }
+                model.setSelectedNetworks(view.getSelectedIndices());
+                mainView.enableCalculating(model.hasSelectedNetworks());
                 view.dispose();
             }
             else if (strActionCommand.equals("btnCancel"))
@@ -111,13 +108,8 @@ public class MainController implements ActionListener{
 
             if (strActionCommand.equals("btnOk"))
             {
-                model.setSettings(view.getSettings());
-
-                view.dispose();
-            }
-            else if (strActionCommand.equals("btnCancel"))
-            {
-                view.dispose();
+                model.saveSetting(view.getActiveIndex(), view.getCurrentValue());
+                view.refresh();
             }
 
         }
