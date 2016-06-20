@@ -1,7 +1,7 @@
 package hftl.simulator.views;
 
-import hftl.simulator.models.helper.DataSeries;
 import hftl.simulator.views.helper.ChartingHistogram;
+import org.jfree.data.xy.XYDataset;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -76,7 +76,7 @@ public class MainView extends JFrame {
         return button;
     }
 
-    public void showCostDiagram(DataSeries[] dsCost) {
+    public void showCostDiagram(XYDataset dsCost) {
 
         ChartingHistogram chart = new ChartingHistogram("Kosten", dsCost, "Dauer", "Euro");
         panBody.remove(panCost);
@@ -92,7 +92,7 @@ public class MainView extends JFrame {
         panBody.repaint();
     }
 
-    public void showPowerConsumptionDiagram(DataSeries[] dsCost) {
+    public void showPowerConsumptionDiagram(XYDataset dsCost) {
 
         ChartingHistogram chart = new ChartingHistogram("Stromverbrauch", dsCost, "Dauer", "kWh");
         panBody.remove(panPowerConsumption);
@@ -102,7 +102,7 @@ public class MainView extends JFrame {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("In showPowerConsumtionDiagramm.");
+        System.out.println("In showPowerConsumptionDiagram.");
 
         panBody.add(panPowerConsumption);
         panBody.validate();
@@ -110,7 +110,7 @@ public class MainView extends JFrame {
 
     }
 
-    public void showNetworkLoadDiagram(DataSeries[] dsCost)
+    public void showNetworkLoadDiagram(XYDataset dsCost)
     {
 
         ChartingHistogram chart = new ChartingHistogram("Netzlast", dsCost, "Dauer", "Byte");

@@ -20,15 +20,13 @@ public class MainController implements ActionListener{
 
 
     private MainView mainView;
-    private NetworkSelectionView networkSelectionView;
-    private SettingsView settingsView;
     private MainModel model;
     private DatabaseConnection dbCon;
 
     public MainController () {
 
 
-        DatabaseConnection dbCon = new DatabaseConnection();
+        dbCon = new DatabaseConnection();
         if(dbCon.openConnection())
         {
             mainView = new MainView("EnergyNetSim");

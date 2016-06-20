@@ -1,9 +1,8 @@
 package hftl.simulator.models;
 
-import hftl.simulator.models.helper.DataPoint;
-import hftl.simulator.models.helper.DataSeries;
-
-import javax.swing.*;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * Created by nickcariss on 07.06.16.
@@ -11,9 +10,9 @@ import javax.swing.*;
 public class MainModel {
 
     NetworkLayout[] selectedNetworks;
-    DataSeries[] dsCost;
-    DataSeries[] dsPowerConsumption;
-    DataSeries[] dsNetworkLoad;
+    XYDataset dsCost;
+    XYDataset dsPowerConsumption;
+    NetworkLoad networkLoad;
     Settings settings;
     NetworkListModel networks;
     DatabaseQueries dbQuery;
@@ -25,95 +24,57 @@ public class MainModel {
         networks.load();
         settings = new Settings(dbQuery);
         settings.load();
-
+        networkLoad = new NetworkLoad();
 
     }
 
+    /**
+     * Main business logic
+     */
     public void calculate ()
     {
         dsCost = simulate();
         dsPowerConsumption = simulate();
-        dsNetworkLoad = simulate();
     }
 
-    public DataSeries[] getDsCost()
+    public XYDataset getDsCost()
     {
         return dsCost;
     }
 
-    public DataSeries[] getDsPowerConsumption()
+    public XYDataset getDsPowerConsumption()
     {
         return dsPowerConsumption;
     }
 
-    public DataSeries[] getDsNetworkLoad()
+    public XYDataset getDsNetworkLoad()
     {
-        return dsNetworkLoad;
+        return networkLoad.getSummary();
     }
 
-    private DataSeries[] simulate () {
+    private XYDataset simulate () {
 
-        DataSeries[] dataseries;
+        XYSeriesCollection dataset;
+        XYSeries dataseries;
+        Network network;
 
-        dataseries = new DataSeries[2];
-        dataseries[0] = new DataSeries("Netz 1", 24);
-        dataseries[1] = new DataSeries("Netz 2", 24);
+        dataset = new XYSeriesCollection();
 
-        try {
-            dataseries[0].insertValue(new DataPoint(1, 5));
-            dataseries[0].insertValue(new DataPoint(2, 6));
-            dataseries[0].insertValue(new DataPoint(3, 5));
-            dataseries[0].insertValue(new DataPoint(4, 4));
-            dataseries[0].insertValue(new DataPoint(5, 2));
-            dataseries[0].insertValue(new DataPoint(6, 4));
-            dataseries[0].insertValue(new DataPoint(7, 7));
-            dataseries[0].insertValue(new DataPoint(8, 9));
-            dataseries[0].insertValue(new DataPoint(9, 11));
-            dataseries[0].insertValue(new DataPoint(10, 13));
-            dataseries[0].insertValue(new DataPoint(11, 12));
-            dataseries[0].insertValue(new DataPoint(12, 13));
-            dataseries[0].insertValue(new DataPoint(13, 14));
-            dataseries[0].insertValue(new DataPoint(14, 15));
-            dataseries[0].insertValue(new DataPoint(15, 15));
-            dataseries[0].insertValue(new DataPoint(16, 12));
-            dataseries[0].insertValue(new DataPoint(17, 10));
-            dataseries[0].insertValue(new DataPoint(18, 12));
-            dataseries[0].insertValue(new DataPoint(19, 14));
-            dataseries[0].insertValue(new DataPoint(20, 14));
-            dataseries[0].insertValue(new DataPoint(21, 11));
-            dataseries[0].insertValue(new DataPoint(22, 9));
-            dataseries[0].insertValue(new DataPoint(23, 7));
-            dataseries[0].insertValue(new DataPoint(24, 6));
-            dataseries[1].insertValue(new DataPoint(1, 2));
-            dataseries[1].insertValue(new DataPoint(2, 4));
-            dataseries[1].insertValue(new DataPoint(3, 3));
-            dataseries[1].insertValue(new DataPoint(4, 2));
-            dataseries[1].insertValue(new DataPoint(5, 1));
-            dataseries[1].insertValue(new DataPoint(6, 2));
-            dataseries[1].insertValue(new DataPoint(7, 5));
-            dataseries[1].insertValue(new DataPoint(8, 7));
-            dataseries[1].insertValue(new DataPoint(9, 9));
-            dataseries[1].insertValue(new DataPoint(10, 11));
-            dataseries[1].insertValue(new DataPoint(11, 10));
-            dataseries[1].insertValue(new DataPoint(12, 11));
-            dataseries[1].insertValue(new DataPoint(13, 12));
-            dataseries[1].insertValue(new DataPoint(14, 13));
-            dataseries[1].insertValue(new DataPoint(15, 13));
-            dataseries[1].insertValue(new DataPoint(16, 10));
-            dataseries[1].insertValue(new DataPoint(17, 8));
-            dataseries[1].insertValue(new DataPoint(18, 10));
-            dataseries[1].insertValue(new DataPoint(19, 12));
-            dataseries[1].insertValue(new DataPoint(20, 12));
-            dataseries[1].insertValue(new DataPoint(21, 9));
-            dataseries[1].insertValue(new DataPoint(22, 7));
-            dataseries[1].insertValue(new DataPoint(23, 5));
-            dataseries[1].insertValue(new DataPoint(24, 4));
+        for (int i = 0; i < networks.size(); i++) {
+            network = (Network)networks.getElementAt(i);
+            if (network.getSelected())
+            {
+                dataseries = new XYSeries(network.getName());
+                for(int j=0; j<24;j++)
+                {
+                    dataseries.add(j, j*2+i);
+                }
 
-        } catch (Exception e) {
-            System.out.println(e);
+                dataset.addSeries(dataseries);
+            }
         }
 
-        return dataseries;
+        return dataset;
 
     }
 
