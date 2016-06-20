@@ -4,6 +4,7 @@ import hftl.simulator.models.helper.DataPoint;
 import hftl.simulator.models.helper.DataSeries;
 
 import javax.swing.*;
+import java.lang.Math;
 
 /**
  * Created by nickcariss on 07.06.16.
@@ -13,7 +14,7 @@ public class MainModel {
     NetworkLayout[] selectedNetworks;
     DataSeries[] dsCost;
     DataSeries[] dsPowerConsumption;
-    DataSeries[] dsNetworkLoad;
+    private DataSeries[] dsNetworkLoad;
     Settings settings;
     NetworkListModel networks;
 
@@ -31,7 +32,6 @@ public class MainModel {
     {
         dsCost = simulate();
         dsPowerConsumption = simulate();
-        dsNetworkLoad = simulate();
     }
 
     public DataSeries[] getDsCost()
@@ -46,6 +46,10 @@ public class MainModel {
 
     public DataSeries[] getDsNetworkLoad()
     {
+        for (int i = 0; i < 24; i++) {
+            System.out.println(Math.sin(i));
+
+        }
         return dsNetworkLoad;
     }
 
