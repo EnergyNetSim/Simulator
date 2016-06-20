@@ -1,18 +1,23 @@
 package hftl.simulator.controllers;
 
 /**
- * Created by Student on 05.05.2016.
+ * Initializes the MainController
+ *
+ * @author www.instagram.com/nickcariss
  */
 public class Main {
 
     static MainController controller;
 
-    public static void main(String [] args) {
-
+    /**
+     * The program's main method.
+     * Creates a new instance of the MainController.
+     *
+     * @param args Command line arguments
+     */
+    public static void main(String [] args)
+    {
         controller = new MainController();
-
-        controller.showView();
-
     }
 
 }

@@ -14,7 +14,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by nickcariss on 07.06.16.
+ * Heart of the MVC pattern.
+ * Contains sub-controllers. Initializes the model and the view.
+ *
+ * @author youtube.com/NickCariss
  */
 public class MainController implements ActionListener{
 
@@ -23,36 +26,37 @@ public class MainController implements ActionListener{
     private MainModel model;
     private DatabaseConnection dbCon;
 
-    public MainController () {
-
-
+    /**
+     * MainController-Constructor.
+     * Tries to open DatabaseConnection. Opens the view on success.
+     */
+    public MainController ()
+    {
         dbCon = new DatabaseConnection();
+
         if(dbCon.openConnection())
         {
-            mainView = new MainView("EnergyNetSim");
             model = new MainModel(dbCon);
-
+            mainView = new MainView("EnergyNetSim");
             mainView.setListener(this);
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Verbindung zur Datenbank konnte nicht hergestellt werden!");
+            JOptionPane.showMessageDialog(null, "Could not establish database connection!");
         }
-
-
-
     }
 
-    public void showView()
-    {
-        mainView.setVisible(true);
-    }
-
-
+    /**
+     * Event handler for MainView.
+     * Handles all MainView button click events.
+     *
+     * @param e The event emitted by the MainView upon clicking a button.
+     */
     public void actionPerformed(ActionEvent e)
     {
         String strActionCommand = e.getActionCommand();
 
+        // Determine which button has been pressed.
         if (strActionCommand.equals("btnNetworkSelection"))
         {
             NetworkSelectionView networkSelectionView = new NetworkSelectionView(mainView, model.getNetworks());
@@ -68,7 +72,6 @@ public class MainController implements ActionListener{
         else if (strActionCommand.equals("btnCalculate"))
         {
             model.calculate();
-
             mainView.showCostDiagram(model.getDsCost());
             mainView.showNetworkLoadDiagram(model.getDsNetworkLoad());
             mainView.showPowerConsumptionDiagram(model.getDsPowerConsumption());
