@@ -81,18 +81,22 @@ public class MainController implements ActionListener{
     //Subklassen implementieren und Views für Settings und SelectNetworks aktualisieren.
     //Die Subklasse ruft beim Schließen des Views die Methode view.enableCalculation(true/false) auf.
 
-    class NetworkSelectionController implements ActionListener {
-
+    /**
+     * Sub-Controller for the network selection dialog.
+     * Opens the network selection view and handles all events inside.
+     *
+     */
+    class NetworkSelectionController implements ActionListener
+    {
         NetworkSelectionView view;
 
-        public NetworkSelectionController(NetworkSelectionView view) {
+        public NetworkSelectionController(NetworkSelectionView view)
+        {
             this.view = view;
-            //view.setNetworks(model.getNetworks()); //is done in view constructor
-            System.out.println("In NetworkSelectionController Constructor");
         }
 
-        public void actionPerformed(ActionEvent e) {
-
+        public void actionPerformed(ActionEvent e)
+        {
             String strActionCommand = e.getActionCommand();
 
             if (strActionCommand.equals("btnOk"))
@@ -105,20 +109,25 @@ public class MainController implements ActionListener{
             {
                 view.dispose();
             }
-
         }
     }
 
-    class SettingsController implements ActionListener {
-
+    /**
+     * Sub-Controller for the settings dialog.
+     * Opens the settings view and handles all events inside.
+     *
+     */
+    class SettingsController implements ActionListener
+    {
         SettingsView view;
 
-        public SettingsController(SettingsView view) {
+        public SettingsController(SettingsView view)
+        {
             this.view = view;
         }
 
-        public void actionPerformed(ActionEvent e) {
-
+        public void actionPerformed(ActionEvent e)
+        {
             String strActionCommand = e.getActionCommand();
 
             if (strActionCommand.equals("btnOk"))
@@ -126,8 +135,6 @@ public class MainController implements ActionListener{
                 model.saveSetting(view.getActiveIndex(), view.getCurrentValue());
                 view.refresh();
             }
-
         }
-
     }
 }

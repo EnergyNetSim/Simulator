@@ -3,72 +3,77 @@ package hftl.simulator.models;
 import java.sql.*;
 
 /**
- * Created by Student on 05.05.2016.
+ * Establishes database connection.
+ * All config params are kept as hard-coded values.
+ *
  */
 public class DatabaseConnection
 {
 
-    private final String treiber = "com.mysql.jdbc.Driver";
-    private String dBase = "jdbc:mysql://localhost/";
-    private String benutzer = "root";
-    private String passwort = "root";
+    private final String driver;
+    private String dBase;
+    private String user;
+    private String pw;
     private Connection con;
     private Statement stmt;
 
-    /** Konstruktor stellt die Daten zum Verbindungsaufbau zusammen.*/
+    /**
+     *  Constructor sets database config params.
+     *
+     */
     public DatabaseConnection()
-    {}
+    {
+        driver = "com.mysql.jdbc.Driver";
+        dBase = "jdbc:mysql://localhost/";
+        user = "root";
+        pw = "root";
+    }
 
+    /**
+     * Opens database connection.
+     *
+     * @return Returns true if connection is successfully established.
+     */
     public boolean openConnection()
     {
-        try {
-            //Laedt den Datenbanktreiber
-            Class.forName(treiber);
-            //Stellt die Verbindung her
-            con = DriverManager.getConnection(dBase, benutzer, passwort);
-            //Erzeugt ein Objekt fuer Abfragen und Aenderungen der Datenbank
+        try
+        {
+            //Load DB driver
+            Class.forName(driver);
+            //Establish connection
+            con = DriverManager.getConnection(dBase, user, pw);
+            //Create DB object
             stmt = con.createStatement();
             stmt.execute("USE energynetsimdb;");
             return true;
         }
-        catch (ClassNotFoundException cnfe) {
-            System.out.println(cnfe.toString());
-            return false;
-        }
-        catch (SQLException sqle) {
-            System.out.println(sqle.toString());
+        catch (Exception e)
+        {
+            System.out.println(e.toString());
             return false;
         }
     }
 
+    /**
+     * Gets the DB object's Statement object to allow creation of SQL statements.
+     *
+     * @return  Statement   The DB object's statement object.
+     */
     public Statement getStmt()
     {
         return stmt;
     }
 
+    /**
+     * Closes the DB connection.
+     *
+     */
     public void closeConnection()
     {
-        try {
+        try
+        {
             stmt.close();
             con.close();
-        }
-        catch (SQLException sqle) {
-            System.out.println(sqle.toString());
-        }
-    }
-
-    public void insert(String table, String[] columns, String[][] values)
-    {
-
-    }
-
-    public void getData()
-    {
-        try {
-            ResultSet results = stmt.executeQuery("SELECT * FROM networks");
-            System.out.println("Folgende Netzwerke sind vorhanden:");
-
-
         }
         catch (SQLException sqle)
         {

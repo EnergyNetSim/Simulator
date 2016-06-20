@@ -1,7 +1,6 @@
 package hftl.simulator.views;
 
-import hftl.simulator.models.Network;
-import hftl.simulator.models.NetworkListModel;
+import hftl.simulator.models.Networks;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -19,13 +18,13 @@ public class NetworkSelectionView extends JDialog
     JButton btnOk;
     JButton btnCancel;
 
-    public NetworkSelectionView(JFrame owner, NetworkListModel networks)
+    public NetworkSelectionView(JFrame owner, Networks networks)
     {
         super(owner, "Netzwerke wählen", true);
         initialize(networks);
     }
 
-    private void initialize(NetworkListModel networks)
+    private void initialize(Networks networks)
     {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -80,7 +79,7 @@ public class NetworkSelectionView extends JDialog
         return list.getSelectedIndices();
     }
 
-    public void setNetworks(NetworkListModel networks) {
+    public void setNetworks(Networks networks) {
 
         //TODO: Liste des Views mit den Netzwerken füllen, so dass Namen angezeigt und die Indizes hinterlegt sind.
         System.out.println("In NetworkSelectionView.setNetworks():");

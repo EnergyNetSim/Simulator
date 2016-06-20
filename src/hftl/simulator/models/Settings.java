@@ -43,12 +43,9 @@ public class Settings extends DefaultListModel{
 
     public void save(int index, String value)
     {
-        ResultSet rsSetting = dbQuery.updateSetting(((Setting) getElementAt(index)).getKey(), value);
-        if (rsSetting!= null)
+        if (dbQuery.updateSetting(((Setting) getElementAt(index)).getKey(), value))
         {
             ((Setting) getElementAt(index)).setValue(value);
         }
-
-
     }
 }

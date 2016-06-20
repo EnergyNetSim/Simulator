@@ -15,8 +15,7 @@ import java.awt.*;
 /**
  * Created by Student on 24.05.2016.
  */
-public class ChartingHistogram implements Charting
-{
+public class ChartingHistogram {
     private String title;
     private XYDataset inputData;
     private String captionX;
