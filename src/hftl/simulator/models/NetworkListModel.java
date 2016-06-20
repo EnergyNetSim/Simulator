@@ -5,29 +5,38 @@ package hftl.simulator.models;
  * Created by nickcariss on 08.06.16.
  */
 import javax.swing.DefaultListModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class NetworkListModel extends DefaultListModel {
 
+    DatabaseQueries dbQuery;
 
+    public NetworkListModel(DatabaseQueries dbQuery)
+    {
+        this.dbQuery = dbQuery;
+    }
 
     public void load()
     {
-        //TODO Datenbankabfrage
-        //abgleich mit networks (hier ist auch hinterlegt, was schon selected ist)
-        //--> aus der DB aktualisierte Liste und Beibehaltung der Auswahl des Users
-        //Rückgabe als Array von Networks
+        ResultSet rsNetworks = dbQuery.selectNetworks();
 
-
-
-        Network n1 = new Network("Netz 1", 1, false);
-        Network n2 = new Network("Netz 3", 22, true);
-        Network n3 = new Network("Netz 24",2, true);
-
-        //Wir fügen unserem ListModel Network-Objekte hinzu
-        this.addElement(n1);
-        this.addElement(n2);
-        this.addElement(n3);
+        if (rsNetworks!= null)
+        {
+            try {
+                while (rsNetworks.next()) {
+                    Network network = new Network(
+                            rsNetworks.getString("networkName"),
+                            rsNetworks.getInt("networkId"),
+                            false);
+                    this.addElement(network);
+                }
+            } catch (SQLException e)
+            {
+                System.out.println(e);
+            }
+        }
     }
 
     public Object getElementAt(int index) {

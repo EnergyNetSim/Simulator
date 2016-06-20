@@ -1,5 +1,6 @@
 package hftl.simulator.controllers;
 
+import hftl.simulator.models.DatabaseConnection;
 import hftl.simulator.models.MainModel;
 import hftl.simulator.models.Network;
 import hftl.simulator.models.Setting;
@@ -7,6 +8,7 @@ import hftl.simulator.views.MainView;
 import hftl.simulator.views.NetworkSelectionView;
 import hftl.simulator.views.SettingsView;
 
+import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,13 +23,25 @@ public class MainController implements ActionListener{
     private NetworkSelectionView networkSelectionView;
     private SettingsView settingsView;
     private MainModel model;
+    private DatabaseConnection dbCon;
 
     public MainController () {
 
-        mainView = new MainView("EnergyNetSim");
-        model = new MainModel();
 
-        mainView.setListener(this);
+        DatabaseConnection dbCon = new DatabaseConnection();
+        if(dbCon.openConnection())
+        {
+            mainView = new MainView("EnergyNetSim");
+            model = new MainModel(dbCon);
+
+            mainView.setListener(this);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Verbindung zur Datenbank konnte nicht hergestellt werden!");
+        }
+
+
 
     }
 

@@ -4,7 +4,6 @@ import hftl.simulator.models.helper.DataPoint;
 import hftl.simulator.models.helper.DataSeries;
 
 import javax.swing.*;
-import java.lang.Math;
 
 /**
  * Created by nickcariss on 07.06.16.
@@ -14,17 +13,19 @@ public class MainModel {
     NetworkLayout[] selectedNetworks;
     DataSeries[] dsCost;
     DataSeries[] dsPowerConsumption;
-    private DataSeries[] dsNetworkLoad;
+    DataSeries[] dsNetworkLoad;
     Settings settings;
     NetworkListModel networks;
+    DatabaseQueries dbQuery;
 
+    public MainModel (DatabaseConnection dbCon) {
 
-    public MainModel () {
-
-        networks = new NetworkListModel();
+        dbQuery = new DatabaseQueries(dbCon);
+        networks = new NetworkListModel(dbQuery);
         networks.load();
-        settings = new Settings();
+        settings = new Settings(dbQuery);
         settings.load();
+
 
     }
 
@@ -32,6 +33,7 @@ public class MainModel {
     {
         dsCost = simulate();
         dsPowerConsumption = simulate();
+        dsNetworkLoad = simulate();
     }
 
     public DataSeries[] getDsCost()
@@ -46,10 +48,6 @@ public class MainModel {
 
     public DataSeries[] getDsNetworkLoad()
     {
-        for (int i = 0; i < 24; i++) {
-            System.out.println(Math.sin(i));
-
-        }
         return dsNetworkLoad;
     }
 
@@ -86,7 +84,6 @@ public class MainModel {
             dataseries[0].insertValue(new DataPoint(22, 9));
             dataseries[0].insertValue(new DataPoint(23, 7));
             dataseries[0].insertValue(new DataPoint(24, 6));
-
             dataseries[1].insertValue(new DataPoint(1, 2));
             dataseries[1].insertValue(new DataPoint(2, 4));
             dataseries[1].insertValue(new DataPoint(3, 3));
@@ -145,6 +142,6 @@ public class MainModel {
     }
 
     public void saveSetting(int index, String value) {
-        ((Setting) settings.getElementAt(index)).setValue(value);
+        settings.save(index, value);
     }
 }

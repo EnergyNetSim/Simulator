@@ -1,25 +1,39 @@
 package hftl.simulator.models;
 
 import javax.swing.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by nickcariss on 20.06.16.
  */
 public class Settings extends DefaultListModel{
 
+    DatabaseQueries dbQuery;
+
+    public Settings(DatabaseQueries dbQuery)
+    {
+        this.dbQuery = dbQuery;
+    }
+
     public void load()
     {
-        //TODO Datenbankabfrage
-        //--> aus der DB aktualisierte Liste
+        ResultSet rsSettings = dbQuery.selectSettings();
 
-        Setting s1 = new Setting("Annahme", "Wert");
-        Setting s2 = new Setting("Annahme2", "Wert2");
-        Setting s3 = new Setting("Annahme3", "Wert3");
-
-        //Wir fügen unserem ListModel Network-Objekte hinzu
-        this.addElement(s1);
-        this.addElement(s2);
-        this.addElement(s3);
+        if (rsSettings!= null)
+        {
+            try {
+                while (rsSettings.next()) {
+                    Setting setting = new Setting(
+                            rsSettings.getString("settingKey"),
+                            rsSettings.getString("settingValue"));
+                    this.addElement(setting);
+                }
+            } catch (SQLException e)
+            {
+                System.out.println(e);
+            }
+        }
     }
 
     public Object getElementAt(int index) {
@@ -27,4 +41,14 @@ public class Settings extends DefaultListModel{
         return setting;
     }
 
+    public void save(int index, String value)
+    {
+        ResultSet rsSetting = dbQuery.updateSetting(((Setting) getElementAt(index)).getKey(), value);
+        if (rsSetting!= null)
+        {
+            ((Setting) getElementAt(index)).setValue(value);
+        }
+
+
+    }
 }
