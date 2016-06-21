@@ -3,7 +3,6 @@ package hftl.simulator.controllers;
 /**
  * Initializes the MainController
  *
- * @author www.instagram.com/nickcariss
  */
 public class Main {
 

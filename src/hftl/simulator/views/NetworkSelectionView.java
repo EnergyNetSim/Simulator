@@ -8,22 +8,33 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
- * Created by nickcariss on 07.06.16.
+ * Network selection view. Is opened from MainController when Button "Network selection" is clicked.
+ *
  */
 public class NetworkSelectionView extends JDialog
 {
-    JPanel panButtons;
-    JScrollPane scrPane;
-    JList list;
-    JButton btnOk;
-    JButton btnCancel;
+    private JList list;
+    private JButton btnOk;
+    private JButton btnCancel;
 
+    /**
+     * Constructor sets JDialog's owner and gets the network list.
+     *
+     * @param   owner       JFrame (MainView)
+     * @param   networks    Network list
+     */
     public NetworkSelectionView(JFrame owner, Networks networks)
     {
         super(owner, "Select networks", true);
         initialize(networks);
     }
 
+    /**
+     * Creates all Java-Swing-components and adds them to the JDialog.
+     * Adds the network objects to the list.
+     *
+     * @param networks  Network list
+     */
     private void initialize(Networks networks)
     {
         this.setLayout(new BorderLayout());
@@ -33,18 +44,13 @@ public class NetworkSelectionView extends JDialog
         //Create list panel:
         list = new JList(networks);
         list.setSelectedIndices(networks.getSelectedIndices());
-        scrPane = new JScrollPane(list);
+        JScrollPane scrPane = new JScrollPane(list);
         scrPane.setBorder(new EmptyBorder(10,10,10,10));
-        //scrPane.add(list);
-        //JLabel testlabel = new JLabel("Testlabel");
-        //testlabel.setSize(20,20);
-        //scrPane.add(testlabel);
         this.add(scrPane, BorderLayout.CENTER);
 
-        //Create button panel
-        panButtons = new JPanel(new FlowLayout());
+        //Create button panel:
+        JPanel panButtons = new JPanel(new FlowLayout());
         panButtons.setBorder(new EmptyBorder(10,10,10,10));
-
         this.add(panButtons, BorderLayout.SOUTH);
 
         //Create buttons:
@@ -52,10 +58,16 @@ public class NetworkSelectionView extends JDialog
         panButtons.add(btnOk);
         btnCancel = createButton("Cancel");
         panButtons.add(btnCancel);
-
     }
 
-    private JButton createButton(String title) {
+    /**
+     * Creates a JButton-object and returns it.
+     *
+     * @param   title   Caption of the new button.
+     * @return  JButton
+     */
+    private JButton createButton(String title)
+    {
         JButton button;
 
         button = new JButton(title);
@@ -63,22 +75,27 @@ public class NetworkSelectionView extends JDialog
         return button;
     }
 
-    public void setListener(ActionListener l)
+    /**
+     * Adds an ActionListener object to all buttons.
+     *
+     * @param   listener   ActionListener in NetworkSelectionController.
+     */
+    public void setListener(ActionListener listener)
     {
         btnOk.setActionCommand("btnOk");
         btnCancel.setActionCommand("btnCancel");
 
-        btnOk.addActionListener(l);
-        btnCancel.addActionListener(l);
+        btnOk.addActionListener(listener);
+        btnCancel.addActionListener(listener);
     }
 
     /**
+     * Returns all selected indices to the controller.
      *
-     * @return
+     * @return int[]    Array of all selected inidices.
      */
     public int[] getSelectedIndices()
     {
-
         return list.getSelectedIndices();
     }
 }

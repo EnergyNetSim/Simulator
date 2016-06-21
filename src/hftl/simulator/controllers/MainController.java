@@ -42,7 +42,7 @@ public class MainController implements ActionListener{
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Could not establish database connection!");
+            JOptionPane.showMessageDialog(null, "Could not establish database connection!", "Warning", 0);
         }
     }
 

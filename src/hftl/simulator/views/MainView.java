@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
  */
 public class MainView extends JFrame {
 
-    private JPanel panHeader;
     private JPanel panBody;
     private JPanel panNetworkLoad;
     private JPanel panPowerConsumption;
@@ -26,11 +25,11 @@ public class MainView extends JFrame {
     /**
      * Constructor. Sets title. Initializes the JFrame.
      *
-     * @param strTitle
+     * @param title
      */
-    public MainView(String strTitle)
+    public MainView(String title)
     {
-        super(strTitle);
+        super(title);
         initialize();
     }
 
@@ -45,7 +44,7 @@ public class MainView extends JFrame {
         this.setSize(800, 600);
 
         //Create header panel:
-        panHeader = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel panHeader = new JPanel(new FlowLayout(FlowLayout.CENTER));
         this.add(panHeader, BorderLayout.NORTH);
 
         //Create body panel
