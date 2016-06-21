@@ -1,7 +1,8 @@
 package hftl.simulator.models;
 
 /**
- * Created by Student on 05.05.2016.
+ * HardwareDevices holds a list of all hardware devices contained in the DB.
+ * Needs to be implemented according to system design.
  */
 public class HardwareDevices {
 }

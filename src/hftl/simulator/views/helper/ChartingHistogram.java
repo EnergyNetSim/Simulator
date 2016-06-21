@@ -8,9 +8,6 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
-import hftl.simulator.models.helper.*;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,38 +15,28 @@ import java.awt.*;
 /**
  * Created by Student on 24.05.2016.
  */
-public class ChartingHistogram implements Charting
-{
+public class ChartingHistogram {
     private String title;
-    private DataSeries[] inputData;
+    private XYDataset inputData;
     private String captionX;
     private String captionY;
 
-    public ChartingHistogram(String title, DataSeries[] inputData, String captionX, String captionY)
+    public ChartingHistogram(String title, XYDataset inputData, String captionX, String captionY)
     {
         this.title = title;
         this.inputData = inputData;
         this.captionX = captionX;
         this.captionY = captionY;
-        printInputData();
     }
 
-    public void printInputData()
-    {
-        System.out.println("Eingabedaten:");
-        for(int i=0; i<inputData.length;i++)
-        {
-            inputData[i].printValues();
-        }
-    }
+
 
     public JPanel DoChart() throws Exception
     {
         ChartPanel chartPanel;
         if (inputData != null)
         {
-            XYDataset dataset = createDataset();
-            JFreeChart chart = createChart(dataset);
+            JFreeChart chart = createChart(inputData);
             chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
             return chartPanel;
@@ -61,38 +48,7 @@ public class ChartingHistogram implements Charting
         }
     }
 
-    private XYDataset createDataset()
-    {
-        XYSeriesCollection dataset;
-        XYSeries dataseries;
-        DataPoint point;
 
-        if(inputData.length == 0)
-        {
-            System.out.println("Keine Daten da!");
-            return null;
-        }
-        else
-        {
-            dataset = new XYSeriesCollection();
-
-            System.out.println("Daten einlesen...");
-            for (int i = 0; i<inputData.length; i++)
-            {
-                dataseries = new XYSeries(inputData[i].Title());
-                System.out.print(dataseries.getDescription() + ":  ");
-                for(int j=0; j<inputData[i].NumValues();j++)
-                {
-                    point = inputData[i].getValue(j);
-                    dataseries.add(point.X(), point.Y());
-                    System.out.println(j + ". Datensatz eingefügt.");
-                }
-
-                dataset.addSeries(dataseries);
-            }
-            return dataset;
-        }
-    }
 
     private JFreeChart createChart(final XYDataset dataset) {
 
