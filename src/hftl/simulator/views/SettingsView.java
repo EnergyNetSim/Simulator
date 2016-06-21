@@ -25,7 +25,7 @@ public class SettingsView extends JDialog
 
     public SettingsView(JFrame owner, Settings settings)
     {
-        super(owner, "Einstellungen", true);
+        super(owner, "Settings", true);
         initialize(settings);
     }
 

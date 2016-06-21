@@ -20,7 +20,7 @@ public class NetworkSelectionView extends JDialog
 
     public NetworkSelectionView(JFrame owner, Networks networks)
     {
-        super(owner, "Netzwerke wählen", true);
+        super(owner, "Select networks", true);
         initialize(networks);
     }
 
@@ -50,7 +50,7 @@ public class NetworkSelectionView extends JDialog
         //Create buttons:
         btnOk = createButton("OK");
         panButtons.add(btnOk);
-        btnCancel = createButton("Abbrechen");
+        btnCancel = createButton("Cancel");
         panButtons.add(btnCancel);
 
     }

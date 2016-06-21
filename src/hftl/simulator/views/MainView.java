@@ -54,13 +54,13 @@ public class MainView extends JFrame {
 
 
         //Create buttons:
-        btnSelectNetworks = createButton("Netzwerk-Auswahl");
+        btnSelectNetworks = createButton("Network selection");
         panHeader.add(btnSelectNetworks);
 
-        btnSettings = createButton("Einstellungen");
+        btnSettings = createButton("Settings");
         panHeader.add(btnSettings);
 
-        btnCalculate = createButton("Berechnen");
+        btnCalculate = createButton("Calculate");
         btnCalculate.setEnabled(false);
         panHeader.add(btnCalculate);
 
