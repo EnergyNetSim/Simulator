@@ -1,4 +1,4 @@
-REATE DATABASE  IF NOT EXISTS `energynetsimdb`;
+CREATE DATABASE  IF NOT EXISTS `energynetsimdb`;
 
 USE `energynetsimdb`;
 
