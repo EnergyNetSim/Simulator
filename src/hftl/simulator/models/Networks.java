@@ -1,9 +1,5 @@
 package hftl.simulator.models;
 
-
-/**
- * Created by nickcariss on 08.06.16.
- */
 import javax.swing.DefaultListModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +26,7 @@ public class Networks extends DefaultListModel
      * Queries DB for the networks, creates Network objects and adds to list.
      *
      */
-    public void load()
+    void load()
     {
         ResultSet rsNetworks = dbQuery.selectNetworks();
 
@@ -55,21 +51,24 @@ public class Networks extends DefaultListModel
     }
 
     /**
+     * Searches an network object in the ListModel.
      *
-     * @param index
-     * @return
+     * @param   index   Index of element in the ListModel.
+     * @return  Network Network object with the corresponding index.
      */
-    public Object getElementAt(int index) {
-        Network network = (Network) super.getElementAt(index);
-        return network;
-    }
-
-    public Network getObjectAt(int index)
+    @Override
+    public Network getElementAt(int index)
     {
-        Network network = (Network) super.getElementAt(index);
+        Network network;
+        network = (Network) super.getElementAt(index);
         return network;
     }
 
+    /**
+     * Returns an array of indices from all selected objects.
+     *
+     * @return  int[]   An int-array of indices.
+     */
     public int[] getSelectedIndices()
     {
         int[] arrSelection;
@@ -78,17 +77,18 @@ public class Networks extends DefaultListModel
 
         for (int i=0; i<this.size();i++)
         {
-            if (this.getObjectAt(i).getSelected())
+            if (this.getElementAt(i).getSelected())
             {
                 arraySize++;
             }
         }
 
         arrSelection = new int[arraySize];
+
         j = 0;
         for (int i=0; i<this.size();i++)
         {
-            if (this.getObjectAt(i).getSelected())
+            if (this.getElementAt(i).getSelected())
             {
                 arrSelection[j] = i;
                 j++;
@@ -96,26 +96,39 @@ public class Networks extends DefaultListModel
         }
 
         return arrSelection;
-
     }
 
-    public void setSelectedIndices(int[] indices)
+    /**
+     * Saves the current selection state in each network object.
+     *
+     * @param   indices Array of selected indices.
+     */
+    void setSelectedIndices(int[] indices)
     {
         for(int i=0; i<this.size(); i++)
         {
-            this.getObjectAt(i).setSelected(false);
+            this.getElementAt(i).setSelected(false);
         }
         for(int i=0;i<indices.length;i++)
         {
-            this.getObjectAt(indices[i]).setSelected(true);
+            this.getElementAt(indices[i]).setSelected(true);
         }
 
     }
 
-    public boolean hasSelectedNetworks()
+    /**
+     * Identify the number of selected networks.
+     *
+     * @return  boolean True if at least one network is selected.
+     */
+    boolean hasSelectedNetworks()
     {
-        for (int i = 0; i < this.size(); i++) {
-            if (this.getObjectAt(i).getSelected()) return true;
+        for (int i = 0; i < this.size(); i++)
+        {
+            if (this.getElementAt(i).getSelected())
+            {
+                return true;
+            }
         }
         return false;
     }

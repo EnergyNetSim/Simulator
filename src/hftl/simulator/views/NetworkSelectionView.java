@@ -72,26 +72,13 @@ public class NetworkSelectionView extends JDialog
         btnCancel.addActionListener(l);
     }
 
-    public int[] getSelectedIndices() {
-
-        //TODO: Return selected network ids as array (obviously)
+    /**
+     *
+     * @return
+     */
+    public int[] getSelectedIndices()
+    {
 
         return list.getSelectedIndices();
-    }
-
-    public void setNetworks(Networks networks) {
-
-        //TODO: Liste des Views mit den Netzwerken füllen, so dass Namen angezeigt und die Indizes hinterlegt sind.
-        System.out.println("In NetworkSelectionView.setNetworks():");
-        System.out.println(networks);
-        list.setModel(networks);
-        System.out.println(list.getModel());
-
-        list.setSelectedIndices(networks.getSelectedIndices());
-        this.repaint();
-        //wenn Network.selected, dann muss das Netzwerk in der Liste als ausgewählt angezeigt werden.
-
-
-
     }
 }
