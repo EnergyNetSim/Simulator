@@ -13,6 +13,7 @@ CREATE TABLE `networks` (
   PRIMARY KEY (`networkId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
   `settingKey` varchar(30) NOT NULL,
   `settingValue` varchar(80) DEFAULT NULL,
