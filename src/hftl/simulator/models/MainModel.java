@@ -4,6 +4,8 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import java.util.Objects;
+
 /**
  * Main model of the MVC structure.
  * Holds all other models.
@@ -41,8 +43,8 @@ public class MainModel
      */
     public void calculate ()
     {
-        dsCost = simulate();
-        dsPowerConsumption = simulate();
+        dsCost = simulate(true);
+        dsPowerConsumption = simulate(false);
     }
 
     /**
@@ -80,28 +82,67 @@ public class MainModel
      *
      * @return  XYDataset   This dataset contains two Dataseries with mock values.
      */
-    private XYDataset simulate ()
+    private XYDataset simulate (boolean boolCost)
     {
         XYSeriesCollection dataset;
         XYSeries dataseries;
         Network network;
         dataset = new XYSeriesCollection();
+        Double cost = 1.0; // EUR/MWh, 29.06.2016
+
+        if (boolCost)
+        {
+            cost = Double.valueOf(settings.getElement("Price(EUR)/MWh").getValue());
+        }
 
         for (int i = 0; i < networks.size(); i++)
         {
             network = (Network)networks.getElementAt(i);
-            if (network.getSelected())
+            if(network.getSelected())
             {
-                dataseries = new XYSeries(network.getName());
-                for(int j=0; j<24;j++)
+                if (Objects.equals(network.getName(), "Static Network"))
                 {
-                    dataseries.add(j, j*2+i);
-                }
+                    dataseries = new XYSeries(network.getName());
 
-                dataset.addSeries(dataseries);
+                    for (int j = 0; j < 24; j++) {
+                        dataseries.add(j, cost * 1.24);
+                    }
+
+                    dataset.addSeries(dataseries);
+                }
+                else if (Objects.equals(network.getName(), "Dynamic Network"))
+                {
+                    dataseries = new XYSeries(network.getName());
+
+                    dataseries.add(0, cost * 0.95);
+                    dataseries.add(1, cost * 0.95);
+                    dataseries.add(2, cost * 0.95);
+                    dataseries.add(3, cost * 0.95);
+                    dataseries.add(4, cost * 0.95);
+                    dataseries.add(5, cost * 0.95);
+                    dataseries.add(6, cost * 0.95);
+                    dataseries.add(7, cost * 0.95);
+                    dataseries.add(8, cost * 1.09);
+                    dataseries.add(9, cost * 1.13);
+                    dataseries.add(10, cost * 1.15);
+                    dataseries.add(11, cost * 1.18);
+                    dataseries.add(12, cost * 1.22);
+                    dataseries.add(13, cost * 1.24);
+                    dataseries.add(14, cost * 1.24);
+                    dataseries.add(15, cost * 1.24);
+                    dataseries.add(16, cost * 1.24);
+                    dataseries.add(17, cost * 1.21);
+                    dataseries.add(18, cost * 1.16);
+                    dataseries.add(19, cost * 1.14);
+                    dataseries.add(20, cost * 1.13);
+                    dataseries.add(21, cost * 0.96);
+                    dataseries.add(22, cost * 0.95);
+                    dataseries.add(23, cost * 0.95);
+
+                    dataset.addSeries(dataseries);
+                }
             }
         }
-
         return dataset;
     }
 

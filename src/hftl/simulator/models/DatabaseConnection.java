@@ -25,8 +25,8 @@ public class DatabaseConnection
     {
         driver = "com.mysql.jdbc.Driver";
         dBase = "jdbc:mysql://localhost/";
-        user = "root";
-        pw = "root";
+        user = "NetSimUser";
+        pw = "NetSimUser";
     }
 
     /**

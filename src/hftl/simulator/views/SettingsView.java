@@ -45,7 +45,7 @@ public class SettingsView extends JDialog
 
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setSize(400,400);
+        this.setSize(400,300);
 
         //Create list panel:
         list = new JList(settings);
@@ -84,7 +84,7 @@ public class SettingsView extends JDialog
         lblKey = new JLabel("Test");
         panButtons.add(lblKey);
         txtValue = new JTextField();
-        txtValue.setPreferredSize(new Dimension(150,20));
+        txtValue.setPreferredSize(new Dimension(100,20));
         panButtons.add(txtValue);
         btnOk = createButton("Save");
         btnOk.setEnabled(false);

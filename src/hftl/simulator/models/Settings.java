@@ -3,6 +3,7 @@ package hftl.simulator.models;
 import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * A list of all the settings.
@@ -59,6 +60,27 @@ public class Settings extends DefaultListModel{
     public Setting getElementAt(int index) {
         Setting setting = (Setting) super.getElementAt(index);
         return setting;
+    }
+
+    /**
+     * Retrieve Setting object for given key.
+     *
+     * @param   key   Key of element in the ListModel.
+     * @return  Setting Setting object with the corresponding key.
+     */
+    public Setting getElement(String key)
+    {
+        Setting setting;
+
+        for (int i = 0; i < this.size(); i++)
+        {
+            setting = getElementAt(i);
+            if (Objects.equals(setting.getKey(), key))
+            {
+                return setting;
+            }
+        }
+        return null;
     }
 
     /**

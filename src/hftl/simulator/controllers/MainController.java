@@ -72,9 +72,9 @@ public class MainController implements ActionListener{
         else if (strActionCommand.equals("btnCalculate"))
         {
             model.calculate();
-            mainView.showCostDiagram(model.getDsCost());
             mainView.showNetworkLoadDiagram(model.getDsNetworkLoad());
             mainView.showPowerConsumptionDiagram(model.getDsPowerConsumption());
+            mainView.showCostDiagram(model.getDsCost());
         }
     }
 

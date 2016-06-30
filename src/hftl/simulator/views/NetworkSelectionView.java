@@ -39,7 +39,7 @@ public class NetworkSelectionView extends JDialog
     {
         this.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        this.setSize(300,400);
+        this.setSize(200,200);
 
         //Create list panel:
         list = new JList(networks);

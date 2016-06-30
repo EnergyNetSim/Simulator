@@ -27,11 +27,11 @@ public class NetworkLoad {
         XYSeriesCollection dataset;
         XYSeries dataseries;
         dataset = new XYSeriesCollection();
-        dataseries = new XYSeries("Netzlast");
+        dataseries = new XYSeries("Network load");
 
         for(int j=0; j<24;j++)
         {
-            dataseries.add(j, Math.sin(j));
+            dataseries.add(j, -0.3*Math.sin(0.3*j+0.6)+0.7);
         }
 
         dataset.addSeries(dataseries);

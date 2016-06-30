@@ -1,9 +1,12 @@
 CREATE DATABASE  IF NOT EXISTS `energynetsimdb`;
 
+CREATE USER "NetSimUser" IDENTIFIED BY "NetSimUser";
+GRANT ALL ON energynetsimdb.* TO 'NetSimUser';
+
 USE `energynetsimdb`;
 
 --
--- Table structure 
+-- Table structure
 --
 
 DROP TABLE IF EXISTS `networks`;
@@ -21,9 +24,9 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data 
+-- Dumping data
 --
 
-INSERT INTO `networks` VALUES (1,'Netz 1'),(2,'Netz 2'),(3,'Netz 3');
+INSERT INTO `networks` VALUES (1,'Static Network'),(2,'Dynamic Network');
 
-INSERT INTO `settings` VALUES ('Key1','Wert4'),('Key2','Value'),('Key3','Wert3');
+INSERT INTO `settings` VALUES ('Price(EUR)/MWh','31.21');
